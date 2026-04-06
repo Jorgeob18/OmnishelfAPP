@@ -3,7 +3,7 @@ import { useAuthStore } from '../store/useAuthStore'
 import { supabase } from '../config/supabase'
 import { useMediaStore } from '../store/useMediaStore'
 import { MediaCard } from '../components/domain/MediaCard'
-import { MediaStatus, SavedMediaItem } from '../types/media'
+import { MediaStatus } from '../types/media'
 import { clsx } from 'clsx'
 
 const TABS: { id: MediaStatus; label: string }[] = [
