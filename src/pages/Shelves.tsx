@@ -25,6 +25,21 @@ export default function Shelves() {
         }
     }, [initialized, loadItems, session])
 
+    // Auto-navegar a una pestaña con contenido si la actual ('to_consume') está vacía
+    useEffect(() => {
+        if (initialized && items.length > 0) {
+            const hasToConsume = items.some(i => i.status === 'to_consume')
+            const hasConsuming = items.some(i => i.status === 'consuming')
+            const hasConsumed = items.some(i => i.status === 'consumed')
+
+            if (!hasToConsume && activeTab === 'to_consume') {
+                if (hasConsuming) setActiveTab('consuming')
+                else if (hasConsumed) setActiveTab('consumed')
+            }
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initialized, items.length])
+
     const handleLogout = async () => {
         await supabase.auth.signOut()
     }
