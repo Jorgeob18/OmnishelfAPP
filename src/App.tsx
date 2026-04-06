@@ -43,6 +43,9 @@ function App() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
       setInitialized(true)
+    }).catch((error) => {
+      console.warn("Offline auth fetch failed, falling back to local session.", error)
+      setInitialized(true)
     })
 
     const {
