@@ -46,10 +46,10 @@ export default function UpdatePassword() {
 
     return (
         <div className="w-full">
-            <h2 className="text-2xl font-bold text-white mb-2 text-center">
+            <h2 className="text-2xl font-bold text-text-main mb-2 text-center">
                 Actualizar Contraseña
             </h2>
-            <p className="text-neutral-400 text-center text-sm mb-6">
+            <p className="text-text-muted text-center text-sm mb-6">
                 Ingresa tu nueva contraseña para la cuenta
             </p>
 
@@ -59,7 +59,7 @@ export default function UpdatePassword() {
                         <Check className="h-8 w-8 mb-2" />
                         ¡La contraseña ha sido actualizada exitosamente!
                     </div>
-                    <p className="text-sm text-neutral-400 animate-pulse">Redirigiendo a tus estantes...</p>
+                    <p className="text-sm text-text-muted animate-pulse">Redirigiendo a tus estantes...</p>
                 </div>
             ) : (
                 <form onSubmit={handleUpdatePassword} className="space-y-4">
@@ -70,17 +70,17 @@ export default function UpdatePassword() {
                     )}
 
                     <div>
-                        <label className="block text-sm font-medium text-neutral-300 mb-1">Nueva Contraseña</label>
+                        <label className="block text-sm font-medium text-text-main/80 mb-1">Nueva Contraseña</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <Lock className="h-5 w-5 text-neutral-500" />
+                                <Lock className="h-5 w-5 text-text-muted" />
                             </div>
                             <input
                                 type="password"
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-neutral-900 border border-neutral-700 rounded-lg pl-10 px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all placeholder-neutral-500"
+                                className="w-full bg-base-card border border-base-border/20 rounded-lg pl-10 px-4 py-2.5 text-text-main focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all placeholder-neutral-500"
                                 placeholder="Minimo 6 caracteres"
                             />
                         </div>
@@ -89,7 +89,7 @@ export default function UpdatePassword() {
                     <button
                         type="submit"
                         disabled={loading || !password}
-                        className="w-full flex items-center justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-neutral-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                        className="w-full flex items-center justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-text-main bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-neutral-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
                     >
                         {loading ? (
                             <Loader2 className="animate-spin h-5 w-5" />
@@ -102,3 +102,4 @@ export default function UpdatePassword() {
         </div>
     )
 }
+

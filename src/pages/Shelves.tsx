@@ -41,18 +41,18 @@ export default function Shelves() {
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-1">
                         Mis Estantes
                     </h1>
-                    <p className="text-neutral-400 text-sm">Organiza tu entretenimiento</p>
+                    <p className="text-text-muted text-sm">Organiza tu entretenimiento</p>
                 </div>
                 <button
                     onClick={handleLogout}
-                    className="text-xs bg-neutral-800 border border-neutral-700 text-neutral-300 hover:bg-neutral-700 px-3 py-1.5 rounded-lg transition-colors"
+                    className="text-xs bg-base-card border border-base-border/20 text-text-main/80 hover:bg-base-card px-3 py-1.5 rounded-lg transition-colors"
                 >
                     Cerrar sesión
                 </button>
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-2 mb-6 bg-neutral-900/60 p-1.5 rounded-2xl border border-white/5 backdrop-blur-md">
+            <div className="flex gap-2 mb-6 bg-base-card/60 p-1.5 rounded-2xl border border-base-border/5 backdrop-blur-md">
                 {TABS.map((tab) => (
                     <button
                         key={tab.id}
@@ -60,8 +60,8 @@ export default function Shelves() {
                         className={clsx(
                             'flex-1 py-2 text-sm font-medium rounded-xl transition-all duration-300',
                             activeTab === tab.id
-                                ? 'bg-neutral-800 text-white shadow-md border border-white/10 ring-1 ring-inset ring-white/5'
-                                : 'text-neutral-500 hover:text-neutral-300 hover:bg-white/5'
+                                ? 'bg-base-card text-text-main shadow-md border border-base-border/10 ring-1 ring-inset ring-white/5'
+                                : 'text-text-muted hover:text-text-main/80 hover:bg-base-border/5'
                         )}
                     >
                         {tab.label}
@@ -70,14 +70,14 @@ export default function Shelves() {
             </div>
 
             <div className="flex justify-between items-center mb-6 px-1">
-                <span className="text-sm text-neutral-400">{filteredItems.length} títulos en esta lista</span>
+                <span className="text-sm text-text-muted">{filteredItems.length} títulos en esta lista</span>
                 <button
                     onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
                     className={clsx(
                         "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all border",
                         showFavoritesOnly
                             ? "bg-red-500/10 text-red-400 border-red-500/30 shadow-sm shadow-red-500/10"
-                            : "bg-neutral-800 border-neutral-700 text-neutral-400 hover:text-white"
+                            : "bg-base-card border-base-border/20 text-text-muted hover:text-text-main"
                     )}
                 >
                     <Heart size={14} fill={showFavoritesOnly ? "currentColor" : "none"} />
@@ -106,8 +106,8 @@ export default function Shelves() {
                 </div>
             ) : (
                 <div className="text-center py-20 flex-1 flex flex-col items-center justify-center">
-                    <p className="text-neutral-400 mb-2">Este estante está vacío.</p>
-                    <p className="text-neutral-500 text-sm leading-relaxed max-w-[250px]">
+                    <p className="text-text-muted mb-2">Este estante está vacío.</p>
+                    <p className="text-text-muted text-sm leading-relaxed max-w-[250px]">
                         Ve al buscador usando el ícono de la lupa abajo para comenzar a sumar títulos.
                     </p>
                 </div>
@@ -115,3 +115,4 @@ export default function Shelves() {
         </div>
     )
 }
+

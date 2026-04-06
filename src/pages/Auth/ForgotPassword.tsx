@@ -32,10 +32,10 @@ export default function ForgotPassword() {
 
     return (
         <div className="w-full">
-            <h2 className="text-2xl font-bold text-white mb-2 text-center">
+            <h2 className="text-2xl font-bold text-text-main mb-2 text-center">
                 Recuperar Contraseña
             </h2>
-            <p className="text-neutral-400 text-center text-sm mb-6">
+            <p className="text-text-muted text-center text-sm mb-6">
                 Te enviaremos un enlace para restaurarla
             </p>
 
@@ -61,17 +61,17 @@ export default function ForgotPassword() {
                     )}
 
                     <div>
-                        <label className="block text-sm font-medium text-neutral-300 mb-1">Correo Electrónico</label>
+                        <label className="block text-sm font-medium text-text-main/80 mb-1">Correo Electrónico</label>
                         <div className="relative">
                             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <Mail className="h-5 w-5 text-neutral-500" />
+                                <Mail className="h-5 w-5 text-text-muted" />
                             </div>
                             <input
                                 type="email"
                                 required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-neutral-900 border border-neutral-700 rounded-lg pl-10 px-4 py-2.5 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all placeholder-neutral-500"
+                                className="w-full bg-base-card border border-base-border/20 rounded-lg pl-10 px-4 py-2.5 text-text-main focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all placeholder-neutral-500"
                                 placeholder="correo@ejemplo.com"
                             />
                         </div>
@@ -80,7 +80,7 @@ export default function ForgotPassword() {
                     <button
                         type="submit"
                         disabled={loading || !email}
-                        className="w-full flex items-center justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-neutral-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                        className="w-full flex items-center justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-text-main bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-neutral-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
                     >
                         {loading ? (
                             <Loader2 className="animate-spin h-5 w-5" />
@@ -95,7 +95,7 @@ export default function ForgotPassword() {
                     <div className="mt-6 text-center">
                         <Link
                             to="/auth/login"
-                            className="text-sm text-neutral-400 hover:text-white transition-colors"
+                            className="text-sm text-text-muted hover:text-text-main transition-colors"
                         >
                             Cancelar y volver
                         </Link>
@@ -105,3 +105,4 @@ export default function ForgotPassword() {
         </div>
     )
 }
+

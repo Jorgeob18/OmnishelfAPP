@@ -36,11 +36,11 @@ interface MediaCardProps {
 
 export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onChangeStatus, onRemove, onToggleFavorite }: MediaCardProps) {
     return (
-        <div className="flex gap-3 p-3 sm:p-4 rounded-2xl bg-neutral-900/60 backdrop-blur-md border border-white/5 hover:border-indigo-500/30 hover:bg-neutral-800/80 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10 relative overflow-hidden">
+        <div className="flex gap-3 p-3 sm:p-4 rounded-2xl bg-base-card/60 backdrop-blur-md border border-base-border/5 hover:border-indigo-500/30 hover:bg-base-card/80 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
             {/* Poster */}
-            <div className="w-16 h-24 sm:w-20 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 bg-neutral-800 relative z-10 shadow-lg border border-white/5">
+            <div className="w-16 h-24 sm:w-20 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 bg-base-card relative z-10 shadow-lg border border-base-border/5">
                 {item.posterPath ? (
                     <>
                         <img
@@ -52,7 +52,7 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                     </>
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center text-neutral-600 text-xs text-center px-1 font-medium bg-neutral-800/50">
+                    <div className="w-full h-full flex items-center justify-center text-text-muted text-xs text-center px-1 font-medium bg-base-card/50">
                         Sin Póster
                     </div>
                 )}
@@ -62,14 +62,14 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
             <div className="flex-1 min-w-0 py-0.5 relative z-10">
                 <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                        <h3 className="text-sm sm:text-base font-bold text-white truncate leading-tight font-display tracking-tight group-hover:text-indigo-200 transition-colors">{item.title}</h3>
+                        <h3 className="text-sm sm:text-base font-bold text-text-main truncate leading-tight font-display tracking-tight group-hover:text-indigo-200 transition-colors">{item.title}</h3>
 
                         <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                             <span className={clsx('inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full border', CATEGORY_COLORS[item.category])}>
                                 {CATEGORY_ICONS[item.category]}
                                 {CATEGORY_LABELS[item.category]}
                             </span>
-                            {item.year && <span className="text-[11px] text-neutral-400">{item.year}</span>}
+                            {item.year && <span className="text-[11px] text-text-muted">{item.year}</span>}
                             {item.rating != null && item.rating > 0 && (
                                 <span className="text-[11px] text-amber-400 flex items-center gap-0.5">
                                     <Star size={9} fill="currentColor" />
@@ -88,7 +88,7 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
                                 'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200',
                                 isAdded
                                     ? 'bg-emerald-500/20 text-emerald-400 cursor-default'
-                                    : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white active:scale-90 border border-indigo-500/30'
+                                    : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-text-main active:scale-90 border border-indigo-500/30'
                             )}
                         >
                             {isAdded ? <Check size={14} /> : <Plus size={14} />}
@@ -100,7 +100,7 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
                             <select
                                 value={item.status}
                                 onChange={(e) => onChangeStatus(item.id, e.target.value as MediaStatus)}
-                                className="bg-neutral-800 border border-neutral-600 outline-none focus:border-indigo-500 text-neutral-300 text-[10px] rounded px-1.5 py-1 appearance-none cursor-pointer"
+                                className="bg-base-card border border-base-border/30 outline-none focus:border-indigo-500 text-text-main/80 text-[10px] rounded px-1.5 py-1 appearance-none cursor-pointer"
                             >
                                 <option value="to_consume">Por Consumir</option>
                                 <option value="consuming">En Curso</option>
@@ -114,7 +114,7 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
                                         "p-1.5 rounded-full transition-colors",
                                         (item as SavedMediaItem).isFavorite
                                             ? "text-red-500 bg-red-500/10 hover:bg-red-500/20"
-                                            : "text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700/50"
+                                            : "text-text-muted hover:text-text-main hover:bg-base-card/50"
                                     )}
                                     title={(item as SavedMediaItem).isFavorite ? "Quitar de favoritos" : "Añadir a favoritos"}
                                 >
@@ -134,7 +134,7 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
 
                 {/* Description preview */}
                 {item.description && (
-                    <p className="text-[11px] text-neutral-400 mt-1.5 line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-text-muted mt-1.5 line-clamp-2 leading-relaxed">
                         {item.description}
                     </p>
                 )}
@@ -142,3 +142,4 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
         </div>
     )
 }
+

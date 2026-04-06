@@ -4,29 +4,63 @@
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Outfit", system-ui, sans-serif;
+
+  /* Theme color mapping */
+  --color-base-app: var(--base-app);
+  --color-base-card: var(--base-card);
+  --color-base-border: var(--base-border);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
 }
 
 :root {
-  color-scheme: dark;
   -webkit-tap-highlight-color: transparent;
+}
+
+:root,
+:root[data-theme="light"] {
+  --base-app: var(--color-slate-50);
+  --base-card: var(--color-white);
+  --base-border: var(--color-slate-200);
+  --text-main: var(--color-slate-900);
+  --text-muted: var(--color-slate-500);
+  color-scheme: light;
+}
+
+:root[data-theme="neutral"] {
+  --base-app: var(--color-neutral-950);
+  --base-card: var(--color-neutral-900);
+  --base-border: var(--color-white);
+  --text-main: var(--color-white);
+  --text-muted: var(--color-neutral-400);
+  color-scheme: dark;
+}
+
+:root[data-theme="dark"] {
+  --base-app: var(--color-black);
+  --base-card: var(--color-zinc-950);
+  --base-border: var(--color-white);
+  --text-main: var(--color-white);
+  --text-muted: var(--color-zinc-400);
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  @apply bg-neutral-950 text-neutral-200 font-sans antialiased overflow-x-hidden;
+  @apply bg-base-app text-text-main font-sans antialiased overflow-x-hidden transition-colors duration-500;
   @apply selection:bg-indigo-500/30 selection:text-indigo-200;
 }
 
 /* Custom UI Utilities for Glassmorphism & Effects */
 @layer utilities {
   .glass-panel {
-    @apply backdrop-blur-xl bg-neutral-900/60 border border-white/5 shadow-2xl;
+    @apply backdrop-blur-xl bg-base-card/60 border border-base-border/10 shadow-2xl;
   }
-  
+
   .glass-pill {
-    @apply backdrop-blur-md bg-neutral-800/40 border border-white/10 shadow-lg;
+    @apply backdrop-blur-md bg-base-card/40 border border-base-border/10 shadow-lg;
   }
 
   .text-glow {
@@ -36,6 +70,7 @@ body {
   .scrollbar-none::-webkit-scrollbar {
     display: none;
   }
+
   .scrollbar-none {
     -ms-overflow-style: none;
     scrollbar-width: none;

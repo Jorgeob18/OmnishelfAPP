@@ -12,14 +12,14 @@ export default function AppLayout() {
     ]
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-white flex flex-col font-sans">
+        <div className="min-h-screen bg-base-app text-text-main flex flex-col font-sans">
             <main className="flex-1 overflow-y-auto pb-20">
                 <div className="max-w-4xl mx-auto">
                     <Outlet />
                 </div>
             </main>
 
-            <nav className="fixed bottom-3 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-sm bg-neutral-900/60 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50">
+            <nav className="fixed bottom-3 left-4 right-4 sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-sm bg-base-card/60 backdrop-blur-2xl border border-base-border/10 rounded-2xl sm:rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.8)] z-50">
                 <div className="flex justify-around items-center h-16 px-2">
                     {navItems.map((item) => {
                         const isActive = location.pathname === item.path
@@ -29,7 +29,7 @@ export default function AppLayout() {
                                 to={item.path}
                                 className={clsx(
                                     "flex flex-col items-center justify-center w-16 h-14 rounded-xl transition-all duration-300 relative",
-                                    isActive ? "text-white" : "text-neutral-500 hover:text-neutral-300 hover:bg-white/5"
+                                    isActive ? "text-text-main" : "text-text-muted hover:text-text-main/80 hover:bg-base-border/5"
                                 )}
                             >
                                 {/* Active Indicator Glow */}
@@ -54,3 +54,4 @@ export default function AppLayout() {
         </div>
     )
 }
+

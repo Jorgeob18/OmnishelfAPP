@@ -68,7 +68,7 @@ export default function SearchPage() {
             <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent mb-1">
                 Buscar
             </h1>
-            <p className="text-neutral-400 text-sm mb-5">Encuentra y añade a tus estantes</p>
+            <p className="text-text-muted text-sm mb-5">Encuentra y añade a tus estantes</p>
 
             {/* Category tabs */}
             <div className="flex gap-2 mb-4 overflow-x-auto pb-1 scrollbar-none">
@@ -79,7 +79,7 @@ export default function SearchPage() {
                         onClick={() => handleCategoryChange(cat.id)}
                         className={clsx(
                             'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium border whitespace-nowrap transition-all duration-200',
-                            'border-neutral-700 text-neutral-400 hover:text-neutral-200',
+                            'border-base-border/20 text-text-muted hover:text-text-main',
                             cat.color
                         )}
                     >
@@ -92,14 +92,14 @@ export default function SearchPage() {
             {/* Search input */}
             <div className="relative mb-5">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                    <Search size={18} className="text-neutral-500" />
+                    <Search size={18} className="text-text-muted" />
                 </div>
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder={PLACEHOLDERS[category]}
-                    className="w-full bg-neutral-800 border border-neutral-700 rounded-xl pl-10 pr-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder-neutral-500"
+                    className="w-full bg-base-card border border-base-border/20 rounded-xl pl-10 pr-4 py-3 text-text-main text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all placeholder-neutral-500"
                 />
             </div>
 
@@ -125,14 +125,14 @@ export default function SearchPage() {
 
             {/* Empty state */}
             {!loading && !error && debouncedQuery.length > 1 && results.length === 0 && !isMissingKey && (
-                <div className="text-center py-10 text-neutral-500 text-sm">
-                    No se encontraron resultados para <span className="text-white">"{debouncedQuery}"</span>
+                <div className="text-center py-10 text-text-muted text-sm">
+                    No se encontraron resultados para <span className="text-text-main">"{debouncedQuery}"</span>
                 </div>
             )}
 
             {/* Idle state */}
             {!loading && !debouncedQuery && (
-                <div className="text-center py-16 text-neutral-600">
+                <div className="text-center py-16 text-text-muted">
                     <Search size={40} className="mx-auto mb-3 opacity-40" />
                     <p className="text-sm">Escribe para buscar {CATEGORIES.find(c => c.id === category)?.label.toLowerCase()}</p>
                 </div>
@@ -154,3 +154,4 @@ export default function SearchPage() {
         </div>
     )
 }
+
