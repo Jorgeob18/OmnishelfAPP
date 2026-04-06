@@ -52,16 +52,16 @@ export default function Shelves() {
             </div>
 
             {/* Tabs */}
-            <div className="flex gap-2 mb-6 bg-neutral-800/50 p-1 rounded-xl">
+            <div className="flex gap-2 mb-6 bg-neutral-900/60 p-1.5 rounded-2xl border border-white/5 backdrop-blur-md">
                 {TABS.map((tab) => (
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={clsx(
-                            'flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-200',
+                            'flex-1 py-2 text-sm font-medium rounded-xl transition-all duration-300',
                             activeTab === tab.id
-                                ? 'bg-neutral-700 text-white shadow-sm'
-                                : 'text-neutral-400 hover:text-neutral-200'
+                                ? 'bg-neutral-800 text-white shadow-md border border-white/10 ring-1 ring-inset ring-white/5'
+                                : 'text-neutral-500 hover:text-neutral-300 hover:bg-white/5'
                         )}
                     >
                         {tab.label}

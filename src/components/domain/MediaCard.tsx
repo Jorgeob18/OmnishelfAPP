@@ -36,28 +36,33 @@ interface MediaCardProps {
 
 export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onChangeStatus, onRemove, onToggleFavorite }: MediaCardProps) {
     return (
-        <div className="flex gap-3 p-3 rounded-xl bg-neutral-800/60 border border-neutral-700/50 hover:border-neutral-600 transition-all duration-200 group">
+        <div className="flex gap-3 p-3 sm:p-4 rounded-2xl bg-neutral-900/60 backdrop-blur-md border border-white/5 hover:border-indigo-500/30 hover:bg-neutral-800/80 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
             {/* Poster */}
-            <div className="w-14 h-20 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-700">
+            <div className="w-16 h-24 sm:w-20 sm:h-28 rounded-xl overflow-hidden flex-shrink-0 bg-neutral-800 relative z-10 shadow-lg border border-white/5">
                 {item.posterPath ? (
-                    <img
-                        src={item.posterPath}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                    />
+                    <>
+                        <img
+                            src={item.posterPath}
+                            alt={item.title}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                            loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+                    </>
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center text-neutral-500 text-xs text-center px-1">
-                        Sin imagen
+                    <div className="w-full h-full flex items-center justify-center text-neutral-600 text-xs text-center px-1 font-medium bg-neutral-800/50">
+                        Sin Póster
                     </div>
                 )}
             </div>
 
             {/* Info */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 py-0.5 relative z-10">
                 <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                        <h3 className="text-sm font-semibold text-white truncate leading-tight">{item.title}</h3>
+                        <h3 className="text-sm sm:text-base font-bold text-white truncate leading-tight font-display tracking-tight group-hover:text-indigo-200 transition-colors">{item.title}</h3>
 
                         <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                             <span className={clsx('inline-flex items-center gap-1 text-[10px] font-medium px-1.5 py-0.5 rounded-full border', CATEGORY_COLORS[item.category])}>
