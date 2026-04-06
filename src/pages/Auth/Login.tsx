@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../../config/supabase'
 import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export default function Login() {
     const [isSignUp, setIsSignUp] = useState(false)
@@ -118,6 +119,16 @@ export default function Login() {
                             placeholder="••••••••"
                         />
                     </div>
+                    {!isSignUp && (
+                        <div className="flex justify-end mt-1">
+                            <Link
+                                to="/auth/forgot-password"
+                                className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
+                            >
+                                ¿Olvidaste tu contraseña?
+                            </Link>
+                        </div>
+                    )}
                 </div>
 
                 <button

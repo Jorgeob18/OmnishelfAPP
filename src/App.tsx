@@ -5,6 +5,8 @@ import { useAuthStore } from './store/useAuthStore'
 import AuthLayout from './layouts/AuthLayout'
 import AppLayout from './layouts/AppLayout'
 import Login from './pages/Auth/Login'
+import ForgotPassword from './pages/Auth/ForgotPassword'
+import UpdatePassword from './pages/Auth/UpdatePassword'
 import Shelves from './pages/Shelves'
 import SearchPage from './pages/Search'
 
@@ -51,6 +53,11 @@ function App() {
       <Routes>
         <Route path="/auth" element={<PublicRoute><AuthLayout /></PublicRoute>}>
           <Route path="login" element={<Login />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+        </Route>
+
+        <Route path="/auth" element={<AuthLayout />}>
+          <Route path="update-password" element={<UpdatePassword />} />
         </Route>
 
         <Route path="/" element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
