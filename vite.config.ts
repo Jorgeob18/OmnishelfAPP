@@ -15,7 +15,10 @@ export default defineConfig({
         name: 'OmniShelf PWA',
         short_name: 'OmniShelf',
         description: 'OmniShelf - Centraliza tus listas de consumo cultural',
-        theme_color: '#ffffff',
+        theme_color: '#0a0a0a',
+        background_color: '#0a0a0a',
+        display: 'standalone',
+        orientation: 'portrait',
         icons: [
           {
             src: 'pwa-192x192.png',
