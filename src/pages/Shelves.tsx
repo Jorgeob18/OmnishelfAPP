@@ -3,6 +3,7 @@ import { useAuthStore } from '../store/useAuthStore'
 import { supabase } from '../config/supabase'
 import { useMediaStore } from '../store/useMediaStore'
 import { MediaCard } from '../components/domain/MediaCard'
+import { Heart } from 'lucide-react'
 import { MediaStatus } from '../types/media'
 import { clsx } from 'clsx'
 
@@ -14,8 +15,9 @@ const TABS: { id: MediaStatus; label: string }[] = [
 
 export default function Shelves() {
     const { session } = useAuthStore()
-    const { items, loading, error, loadItems, updateStatus, removeItem, initialized } = useMediaStore()
+    const { items, loading, error, loadItems, updateStatus, removeItem, initialized, toggleFavorite } = useMediaStore()
     const [activeTab, setActiveTab] = useState<MediaStatus>('to_consume')
+    const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
 
     useEffect(() => {
         if (!initialized && session) {
@@ -27,7 +29,10 @@ export default function Shelves() {
         await supabase.auth.signOut()
     }
 
-    const filteredItems = items.filter((item) => item.status === activeTab)
+    const filteredItems = items.filter((item) => {
+        if (showFavoritesOnly && !item.isFavorite) return false;
+        return item.status === activeTab;
+    })
 
     return (
         <div className="p-4 sm:p-6 pb-24 max-w-2xl mx-auto h-full flex flex-col">
@@ -64,6 +69,22 @@ export default function Shelves() {
                 ))}
             </div>
 
+            <div className="flex justify-between items-center mb-6 px-1">
+                <span className="text-sm text-neutral-400">{filteredItems.length} títulos en esta lista</span>
+                <button
+                    onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+                    className={clsx(
+                        "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all border",
+                        showFavoritesOnly
+                            ? "bg-red-500/10 text-red-400 border-red-500/30 shadow-sm shadow-red-500/10"
+                            : "bg-neutral-800 border-neutral-700 text-neutral-400 hover:text-white"
+                    )}
+                >
+                    <Heart size={14} fill={showFavoritesOnly ? "currentColor" : "none"} />
+                    Solo Favoritos
+                </button>
+            </div>
+
             {loading && items.length === 0 ? (
                 <div className="flex items-center justify-center flex-1">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500"></div>
@@ -79,6 +100,7 @@ export default function Shelves() {
                             mode="shelf"
                             onChangeStatus={updateStatus}
                             onRemove={removeItem}
+                            onToggleFavorite={toggleFavorite}
                         />
                     ))}
                 </div>

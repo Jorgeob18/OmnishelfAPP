@@ -1,4 +1,4 @@
-import { BookOpen, Clapperboard, Star, Tv, Plus, Check, Trash } from 'lucide-react'
+import { BookOpen, Clapperboard, Star, Tv, Plus, Check, Trash, Heart } from 'lucide-react'
 import { MediaItem, MediaCategory, SavedMediaItem, MediaStatus } from '../../types/media'
 import { clsx } from 'clsx'
 
@@ -28,11 +28,13 @@ interface MediaCardProps {
     mode?: 'search' | 'shelf'
     isAdded?: boolean
     onAdd?: (item: MediaItem) => void
+
     onChangeStatus?: (id: string, status: MediaStatus) => void
     onRemove?: (id: string) => void
+    onToggleFavorite?: (id: string) => void
 }
 
-export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onChangeStatus, onRemove }: MediaCardProps) {
+export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onChangeStatus, onRemove, onToggleFavorite }: MediaCardProps) {
     return (
         <div className="flex gap-3 p-3 rounded-xl bg-neutral-800/60 border border-neutral-700/50 hover:border-neutral-600 transition-all duration-200 group">
             {/* Poster */}
@@ -100,13 +102,27 @@ export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onCha
                                 <option value="consumed">Completado</option>
                             </select>
 
-                            <button
-                                onClick={() => onRemove(item.id)}
-                                className="text-red-400 hover:text-red-300 p-1 opacity-60 hover:opacity-100 transition-opacity"
-                                title="Eliminar"
-                            >
-                                <Trash size={12} />
-                            </button>
+                            <div className="flex gap-1 justify-end items-center mt-1">
+                                <button
+                                    onClick={() => onToggleFavorite && onToggleFavorite(item.id)}
+                                    className={clsx(
+                                        "p-1.5 rounded-full transition-colors",
+                                        (item as SavedMediaItem).isFavorite
+                                            ? "text-red-500 bg-red-500/10 hover:bg-red-500/20"
+                                            : "text-neutral-400 hover:text-neutral-200 hover:bg-neutral-700/50"
+                                    )}
+                                    title={(item as SavedMediaItem).isFavorite ? "Quitar de favoritos" : "Añadir a favoritos"}
+                                >
+                                    <Heart size={14} strokeWidth={2.5} fill={(item as SavedMediaItem).isFavorite ? "currentColor" : "none"} />
+                                </button>
+                                <button
+                                    onClick={() => onRemove(item.id)}
+                                    className="p-1.5 rounded-full text-red-400 hover:text-red-300 bg-red-400/5 hover:bg-red-400/10 transition-colors opacity-70 hover:opacity-100"
+                                    title="Eliminar"
+                                >
+                                    <Trash size={14} />
+                                </button>
+                            </div>
                         </div>
                     )}
                 </div>

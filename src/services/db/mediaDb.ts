@@ -63,6 +63,15 @@ export async function addMediaItem(userId: string, item: MediaItem): Promise<Sav
     }
 }
 
+export async function updateMediaFavorite(id: string, isFavorite: boolean): Promise<void> {
+    const { error } = await supabase
+        .from('media_items')
+        .update({ is_favorite: isFavorite, updated_at: new Date().toISOString() })
+        .eq('id', id)
+
+    if (error) throw error
+}
+
 export async function updateMediaStatus(id: string, status: MediaStatus): Promise<void> {
     const { error } = await supabase
         .from('media_items')

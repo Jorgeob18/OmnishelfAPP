@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { SavedMediaItem, MediaItem, MediaStatus } from '../types/media'
-import { fetchUserMedia, addMediaItem, updateMediaStatus, removeMediaItem } from '../services/db/mediaDb'
+import { fetchUserMedia, addMediaItem, updateMediaStatus, removeMediaItem, updateMediaFavorite } from '../services/db/mediaDb'
 import { useAuthStore } from './useAuthStore'
 
 interface MediaState {
@@ -11,8 +11,10 @@ interface MediaState {
 
     loadItems: () => Promise<void>
     addItem: (item: MediaItem) => Promise<SavedMediaItem | null>
+
     updateStatus: (id: string, status: MediaStatus) => Promise<void>
     removeItem: (id: string) => Promise<void>
+    toggleFavorite: (id: string) => Promise<void>
 }
 
 export const useMediaStore = create<MediaState>((set, get) => ({
@@ -75,6 +77,25 @@ export const useMediaStore = create<MediaState>((set, get) => ({
                 items: state.items.filter((i) => i.id !== id)
             }))
             await removeMediaItem(id)
+        } catch (error: any) {
+            set({ error: error.message })
+        }
+    },
+
+    toggleFavorite: async (id: string) => {
+        try {
+            // Optimistic update
+            let targetIsFavorite = false
+            set((state) => ({
+                items: state.items.map((i) => {
+                    if (i.id === id) {
+                        targetIsFavorite = !i.isFavorite
+                        return { ...i, isFavorite: targetIsFavorite }
+                    }
+                    return i
+                })
+            }))
+            await updateMediaFavorite(id, targetIsFavorite)
         } catch (error: any) {
             set({ error: error.message })
         }
