@@ -1,5 +1,5 @@
-import { BookOpen, Clapperboard, Star, Tv, Plus, Check } from 'lucide-react'
-import { MediaItem, MediaCategory } from '../../types/media'
+import { BookOpen, Clapperboard, Star, Tv, Plus, Check, Trash } from 'lucide-react'
+import { MediaItem, MediaCategory, SavedMediaItem, MediaStatus } from '../../types/media'
 import { clsx } from 'clsx'
 
 const CATEGORY_ICONS: Record<MediaCategory, React.ReactNode> = {
@@ -24,12 +24,15 @@ const CATEGORY_LABELS: Record<MediaCategory, string> = {
 }
 
 interface MediaCardProps {
-    item: MediaItem
+    item: MediaItem | SavedMediaItem
+    mode?: 'search' | 'shelf'
     isAdded?: boolean
-    onAdd: (item: MediaItem) => void
+    onAdd?: (item: MediaItem) => void
+    onChangeStatus?: (id: string, status: MediaStatus) => void
+    onRemove?: (id: string) => void
 }
 
-export function MediaCard({ item, isAdded = false, onAdd }: MediaCardProps) {
+export function MediaCard({ item, mode = 'search', isAdded = false, onAdd, onChangeStatus, onRemove }: MediaCardProps) {
     return (
         <div className="flex gap-3 p-3 rounded-xl bg-neutral-800/60 border border-neutral-700/50 hover:border-neutral-600 transition-all duration-200 group">
             {/* Poster */}
@@ -69,19 +72,43 @@ export function MediaCard({ item, isAdded = false, onAdd }: MediaCardProps) {
                         </div>
                     </div>
 
-                    {/* Add button */}
-                    <button
-                        onClick={() => onAdd(item)}
-                        disabled={isAdded}
-                        className={clsx(
-                            'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200',
-                            isAdded
-                                ? 'bg-emerald-500/20 text-emerald-400 cursor-default'
-                                : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white active:scale-90 border border-indigo-500/30'
-                        )}
-                    >
-                        {isAdded ? <Check size={14} /> : <Plus size={14} />}
-                    </button>
+                    {/* Actions */}
+                    {mode === 'search' && onAdd && (
+                        <button
+                            onClick={() => onAdd(item as MediaItem)}
+                            disabled={isAdded}
+                            className={clsx(
+                                'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200',
+                                isAdded
+                                    ? 'bg-emerald-500/20 text-emerald-400 cursor-default'
+                                    : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500 hover:text-white active:scale-90 border border-indigo-500/30'
+                            )}
+                        >
+                            {isAdded ? <Check size={14} /> : <Plus size={14} />}
+                        </button>
+                    )}
+
+                    {mode === 'shelf' && 'id' in item && onChangeStatus && onRemove && (
+                        <div className="flex flex-col gap-1 items-end ml-2 mt-[-4px]">
+                            <select
+                                value={item.status}
+                                onChange={(e) => onChangeStatus(item.id, e.target.value as MediaStatus)}
+                                className="bg-neutral-800 border border-neutral-600 outline-none focus:border-indigo-500 text-neutral-300 text-[10px] rounded px-1.5 py-1 appearance-none cursor-pointer"
+                            >
+                                <option value="to_consume">Por Consumir</option>
+                                <option value="consuming">En Curso</option>
+                                <option value="consumed">Completado</option>
+                            </select>
+
+                            <button
+                                onClick={() => onRemove(item.id)}
+                                className="text-red-400 hover:text-red-300 p-1 opacity-60 hover:opacity-100 transition-opacity"
+                                title="Eliminar"
+                            >
+                                <Trash size={12} />
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Description preview */}

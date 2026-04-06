@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Search, Film, Tv, Sword, BookOpen, AlertCircle } from 'lucide-react'
 import { MediaCategory, MediaItem } from '../types/media'
 import { useDebounce } from '../hooks/useDebounce'
 import { useSearch } from '../hooks/useSearch'
 import { MediaCard } from '../components/domain/MediaCard'
 import { SkeletonCard } from '../components/common/SkeletonCard'
+import { useMediaStore } from '../store/useMediaStore'
 import { clsx } from 'clsx'
 
 const CATEGORIES: { id: MediaCategory; label: string; icon: React.ReactNode; color: string }[] = [
@@ -30,8 +31,14 @@ const API_MISSING_MSG: Partial<Record<MediaCategory, string>> = {
 export default function SearchPage() {
     const [category, setCategory] = useState<MediaCategory>('movie')
     const [query, setQuery] = useState('')
-    const [addedIds, setAddedIds] = useState<Set<string>>(new Set())
     const debouncedQuery = useDebounce(query, 450)
+
+    // Connect to Zustand store
+    const { items: savedItems, addItem, loadItems, initialized } = useMediaStore()
+
+    useEffect(() => {
+        if (!initialized) loadItems()
+    }, [initialized, loadItems])
 
     // Check API key availability
     const tmdbKey = import.meta.env.VITE_TMDB_API_KEY
@@ -42,9 +49,13 @@ export default function SearchPage() {
 
     const { results, loading, error } = useSearch(debouncedQuery, category)
 
-    const handleAdd = (item: MediaItem) => {
-        // TODO: conectar con Supabase en el sprint de Estantes
-        setAddedIds((prev) => new Set(prev).add(`${item.category}-${item.apiId}`))
+    const handleAdd = async (item: MediaItem) => {
+        await addItem(item)
+    }
+
+    // Comprueba si el ítem ya está guardado en el estante del usuario
+    const checkIsAdded = (apiId: string, cat: MediaCategory) => {
+        return savedItems.some((saved) => saved.apiId === apiId && saved.category === cat)
     }
 
     const handleCategoryChange = (cat: MediaCategory) => {
@@ -134,7 +145,7 @@ export default function SearchPage() {
                         <MediaCard
                             key={`${item.category}-${item.apiId}`}
                             item={item}
-                            isAdded={addedIds.has(`${item.category}-${item.apiId}`)}
+                            isAdded={checkIsAdded(item.apiId, item.category)}
                             onAdd={handleAdd}
                         />
                     ))}
